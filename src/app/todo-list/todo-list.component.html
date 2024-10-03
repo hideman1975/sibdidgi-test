@@ -1,0 +1,58 @@
+<form class="example-form">
+    
+    <div style="display: flex;">
+      <mat-form-field appearance="fill" class="example-form-field">
+        <mat-label>Выбрать начальную дату</mat-label>
+        <input matInput [matDatepicker]="datepickerFrom" [max]="maxDate" [(ngModel)]="startDate" name="startDate">
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matSuffix [for]="datepickerFrom"></mat-datepicker-toggle>
+        <mat-datepicker #datepickerFrom>
+          <mat-datepicker-actions>
+            <button mat-button matDatepickerCancel>Cancel</button>
+            <button mat-raised-button color="primary" matDatepickerApply (click)="filterChange()">Apply</button>
+          </mat-datepicker-actions>
+        </mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="example-form-field">
+        <mat-label>Выбрать конечную дату</mat-label>
+        <input matInput [matDatepicker]="datepickerTo" [max]="maxDate" [(ngModel)]="endDate" name="endDate">
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matSuffix [for]="datepickerTo"></mat-datepicker-toggle>
+        <mat-datepicker #datepickerTo>
+          <mat-datepicker-actions>
+            <button mat-button matDatepickerCancel>Cancel</button>
+            <button mat-raised-button color="primary" matDatepickerApply (click)="filterChange()">Apply</button>
+          </mat-datepicker-actions>
+        </mat-datepicker>
+      </mat-form-field>
+    </div>
+
+  </form>
+
+<table mat-table [dataSource]="data">
+  
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef> Статус </th>
+      <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef> Описание </th>
+      <td mat-cell *matCellDef="let element"> {{element.shortDescription}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="created">
+      <th mat-header-cell *matHeaderCellDef> Создано </th>
+      <td mat-cell *matCellDef="let element"> {{element.dateCreate | date: 'medium'}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="completed">
+      <th mat-header-cell *matHeaderCellDef> Завершено </th>
+      <td mat-cell *matCellDef="let element"> {{element.dateComplete | date: 'medium'}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns;  sticky: true;"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectTodo(row)" class="highlight-row"></tr>
+  </table>
+
